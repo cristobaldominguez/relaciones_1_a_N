@@ -1,34 +1,30 @@
 class ApartmentsController < ApplicationController
-  before_action :set_building
+  before_action :set_building, except: %i[ destroy ]
   before_action :set_apartment, only: %i[ show edit update destroy ]
 
-  # GET /apartments or /apartments.json
+  # GET buildings/1/apartments or /apartments.json
   def index
-    @apartments = Apartment.all
+    @apartments = @building.apartments
   end
 
-  # GET /apartments/1 or /apartments/1.json
+  # GET buildings/1/apartments/1 or /apartments/1.json
   def show
   end
 
-  # GET /apartments/new
+  # GET buildings/1/apartments/new
   def new
     @apartment = Apartment.new
   end
 
-  # GET /apartments/1/edit
-  def edit
-  end
-
-  # POST /apartments or /apartments.json
+  # POST buildings/1/apartments or /apartments.json
   def create
     # @apartment = Apartment.new(apartment_params.merge(building: @building))
-    Apartment.new(apartment_params)
+    @apartment = Apartment.new(apartment_params)
     @apartment.building = @building
 
     respond_to do |format|
       if @apartment.save
-        format.html { redirect_to apartment_url(@apartment), notice: "Apartment was successfully created." }
+        format.html { redirect_to building_url(@building), notice: "Apartment was successfully created." }
         format.json { render :show, status: :created, location: @apartment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,11 +33,15 @@ class ApartmentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /apartments/1 or /apartments/1.json
+  # GET buildings/1/apartments/1/edit
+  def edit
+  end
+
+  # PATCH/PUT buildings/1/apartments/1 or /apartments/1.json
   def update
     respond_to do |format|
       if @apartment.update(apartment_params)
-        format.html { redirect_to apartment_url(@apartment), notice: "Apartment was successfully updated." }
+        format.html { redirect_to building_url(@building), notice: "Apartment was successfully updated." }
         format.json { render :show, status: :ok, location: @apartment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,12 +50,12 @@ class ApartmentsController < ApplicationController
     end
   end
 
-  # DELETE /apartments/1 or /apartments/1.json
+  # DELETE buildings/1/apartments/1 or /apartments/1.json
   def destroy
     @apartment.destroy
 
     respond_to do |format|
-      format.html { redirect_to apartments_url, notice: "Apartment was successfully destroyed." }
+      format.html { redirect_to building_url(@building), notice: "Apartment was successfully destroyed." }
       format.json { head :no_content }
     end
   end

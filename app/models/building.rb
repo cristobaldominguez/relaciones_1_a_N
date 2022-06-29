@@ -1,3 +1,3 @@
 class Building < ApplicationRecord
-    has_many :apartments
+    has_many :apartments, dependent: :destroy
 end

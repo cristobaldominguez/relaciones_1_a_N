@@ -9,6 +9,7 @@ class BuildingsController < ApplicationController
   # GET /buildings/1 or /buildings/1.json
   def show
     @apartment = Apartment.new
+    @apartments = @building.apartments
   end
 
   # GET /buildings/new

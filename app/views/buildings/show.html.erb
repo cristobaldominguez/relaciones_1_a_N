@@ -5,18 +5,19 @@
   <%= @building.name %>
 </p>
 
-<%= form_with(model: [@building, @apartment]) do |form| %>
-
-  <div class="field">
-    <%= form.label :number %>
-    <%= form.number_field :number %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<p>Departamentos:</p>
+<% if @apartments.present? %>
+<ul>
+  <% @apartments.each do |apartment| %>
+  <li>
+    <span><%= apartment.number %></span>
+    <span><%= link_to 'Editar', edit_building_apartment_path(@building, apartment) %></span>
+  </li>
+  <% end %>
+</ul>
 <% end %>
 
+<%= render 'apartments/form', apartment: @apartment %>
 
 <%= link_to 'Edit', edit_building_path(@building) %> |
 <%= link_to 'Back', buildings_path %>
