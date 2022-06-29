@@ -1,4 +1,5 @@
 class ApartmentsController < ApplicationController
+  before_action :set_building
   before_action :set_apartment, only: %i[ show edit update destroy ]
 
   # GET /apartments or /apartments.json
@@ -21,7 +22,9 @@ class ApartmentsController < ApplicationController
 
   # POST /apartments or /apartments.json
   def create
-    @apartment = Apartment.new(apartment_params)
+    # @apartment = Apartment.new(apartment_params.merge(building: @building))
+    Apartment.new(apartment_params)
+    @apartment.building = @building
 
     respond_to do |format|
       if @apartment.save
@@ -63,8 +66,12 @@ class ApartmentsController < ApplicationController
       @apartment = Apartment.find(params[:id])
     end
 
+    def set_building
+      @building = Building.find(params[:building_id])
+    end
+
     # Only allow a list of trusted parameters through.
     def apartment_params
-      params.require(:apartment).permit(:number, :building_id)
+      params.require(:apartment).permit(:number)
     end
 end

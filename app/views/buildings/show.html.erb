@@ -5,5 +5,18 @@
   <%= @building.name %>
 </p>
 
+<%= form_with(model: [@building, @apartment]) do |form| %>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.number_field :number %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
 <%= link_to 'Edit', edit_building_path(@building) %> |
 <%= link_to 'Back', buildings_path %>

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :apartments
-  resources :buildings
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
+  # /buildings/1/apartments/2
+  resources :buildings do
+    resources :apartments
+  end
+
+  root 'buildings#index'
 end
