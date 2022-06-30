@@ -16,6 +16,12 @@
     <%= form.text_field :name %>
   </div>
 
+  <p>Apartment Fields</p>
+  <%= form.fields_for :apartments do |apartment| %>
+    <%= apartment.label :number %>
+    <%= apartment.text_field :number %>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
